@@ -21,6 +21,9 @@ opt.ruler = true
 opt.splitbelow = true
 opt.splitright = true
 
+-- StatusLine
+opt.statusline = [[ %n:%f %= %Y < %l:%v < (%P) ]]
+
 --
 -- Keymaps
 --
@@ -30,10 +33,10 @@ local silent = { silent = true }
 vim.g.mapleader = " "
 
 -- Easier pane navigation
-key.set("n", "<C-h>", "<C-w>h")
-key.set("n", "<C-j>", "<C-w>j")
-key.set("n", "<C-k>", "<C-w>k")
-key.set("n", "<C-l>", "<C-w>l")
+key.set("n", "<C-h>", "<C-w>h", silent)
+key.set("n", "<C-j>", "<C-w>j", silent)
+key.set("n", "<C-k>", "<C-w>k", silent)
+key.set("n", "<C-l>", "<C-w>l", silent)
 
 -- Easier buffer switching
 key.set("n", "<Leader><Left>", ":bp<CR>", silent)
@@ -76,18 +79,18 @@ local autocmd = vim.api.nvim_create_autocmd
 -- Cursorline follows active window
 autocmd("WinEnter", {
   pattern = "",
-  command = [[:set cursorline]]
+  command = ":set cursorline"
 })
 
 autocmd("WinLeave", {
   pattern = "",
-  command = [[:set nocursorline]]
+  command = ":set nocursorline"
 })
 
 -- Strip trailing whitespace on save
 autocmd("BufWritePre", {
   pattern = "",
-  command = [[:%s/\s+$//e]]
+  command = [[:%s/\s\+$//e]]
 })
 
 -- C files
