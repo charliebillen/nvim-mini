@@ -61,7 +61,7 @@ key.set("n", "<Leader>n", ":set nohls!<CR>", silent)
 -- Colourscheme and tweaks
 --
 vim.cmd [[
-colorscheme wildcharm
+colorscheme default
 hi LineNr           ctermfg=darkcyan    ctermbg=NONE
 hi StatusLine       ctermfg=lightgrey   ctermbg=darkblue    cterm=NONE
 hi StatusLineNC     ctermfg=black       ctermbg=darkgray    cterm=NONE
@@ -100,7 +100,11 @@ augroup('c-settings', { clear = true })
 autocmd("BufWritePre", {
   group = 'c-settings',
   pattern = { "*.c", "*.h" },
-  command = [[:%!clang-format]]
+  callback = function()
+    local cursor = vim.fn.getpos(".")
+    vim.cmd [[:%!clang-format]]
+    vim.fn.setpos(".", cursor)
+  end
 })
 
 -- Lua files
