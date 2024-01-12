@@ -76,6 +76,9 @@ hi Function         ctermfg=NONE        ctermbg=NONE        cterm=bold
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
+-- General
+--
+
 -- Cursorline follows active window
 autocmd("WinEnter", {
   pattern = "",
@@ -90,7 +93,11 @@ autocmd("WinLeave", {
 -- Strip trailing whitespace on save
 autocmd("BufWritePre", {
   pattern = "",
-  command = [[:%s/\s\+$//e]]
+  callback = function()
+    local cursor = vim.fn.getpos(".")
+    vim.cmd [[:%s/\s\+$//e]]
+    vim.fn.setpos(".", cursor)
+  end
 })
 
 -- C files
