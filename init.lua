@@ -62,12 +62,12 @@ key.set("n", "<Leader>n", ":set nohls!<CR>", silent)
 --
 vim.cmd [[
 colorscheme default
-hi LineNr           ctermfg=darkcyan    ctermbg=NONE
-hi StatusLine       ctermfg=lightgrey   ctermbg=darkblue    cterm=NONE
-hi StatusLineNC     ctermfg=black       ctermbg=darkgray    cterm=NONE
+hi LineNr           ctermfg=237         ctermbg=NONE
+hi StatusLine       ctermfg=7           ctermbg=234         cterm=NONE
+hi StatusLineNC     ctermfg=8           ctermbg=234         cterm=NONE
 hi CursorLine       ctermfg=NONE        ctermbg=NONE        cterm=underline
-hi VertSplit        ctermfg=darkgray    ctermbg=NONE        cterm=NONE
-hi Function         ctermfg=NONE        ctermbg=NONE        cterm=bold
+hi VertSplit        ctermfg=234         ctermbg=NONE        cterm=NONE
+hi Function         ctermfg=NONE        ctermbg=NONE        cterm=italic
 ]]
 
 --
@@ -88,30 +88,6 @@ autocmd("WinEnter", {
 autocmd("WinLeave", {
   pattern = "",
   command = ":set nocursorline"
-})
-
--- Strip trailing whitespace on save
-autocmd("BufWritePre", {
-  pattern = "",
-  callback = function()
-    local cursor = vim.fn.getpos(".")
-    vim.cmd [[:%s/\s\+$//e]]
-    vim.fn.setpos(".", cursor)
-  end
-})
-
--- C files
---
-augroup('c-settings', { clear = true })
--- Format files on save
-autocmd("BufWritePre", {
-  group = 'c-settings',
-  pattern = { "*.c", "*.h" },
-  callback = function()
-    local cursor = vim.fn.getpos(".")
-    vim.cmd [[:%!clang-format]]
-    vim.fn.setpos(".", cursor)
-  end
 })
 
 -- Lua files
